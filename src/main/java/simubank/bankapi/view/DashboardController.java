@@ -19,6 +19,9 @@ import java.util.Arrays;
 
 @Controller
 public class DashboardController {
+    @Autowired
+    AccountRepository accountsRepository;
+
     @FXML
     private TableView<Account> accountsTable;
 
@@ -28,14 +31,23 @@ public class DashboardController {
     }
 
     public void loadAccounts() {
-        ObservableList<Account> accounts = FXCollections.observableArrayList();
+        for(int i = 0; i < 10; i++) {
+            accountsRepository.save(new Account("Account " + i, Account.Type.CREDIT, 100));
+        }
+        ObservableList<Account> accountsList = toObservableList(accountsRepository.findAll());
         TableColumn<Account, String> nameCol = new TableColumn<>("Name");
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        for (int i = 0; i < 100; i++) {
-            accounts.add(new Account("Eric", Account.Type.CREDIT, 100.0));
-        }
+        accountsList.addAll();
         accountsTable.getColumns().add(nameCol);
-        accountsTable.setItems(accounts);
+        accountsTable.setItems(accountsList);
         System.out.println(accountsTable.getColumns());
+    }
+
+    public static <T> ObservableList<T> toObservableList(Iterable<T> iterable) {
+        ObservableList<T> observableList = FXCollections.observableArrayList();
+        for (T element : iterable) {
+            observableList.add(element);
+        }
+        return observableList;
     }
 }
