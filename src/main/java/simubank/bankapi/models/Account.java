@@ -25,14 +25,6 @@ public class Account {
     private double balance;
     private String name;
     private String type;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="cards_id", referencedColumnName = "id")
-    private Card card;
-
-    @OneToOne(mappedBy = "account")
-    private Tpe tpe;
-
     public Account(){
 
     }
@@ -43,20 +35,12 @@ public class Account {
         this.balance = balance;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setCard(Card card){
-        this.card = card;
     }
 
     @Override
@@ -66,8 +50,6 @@ public class Account {
             ", balance=" + balance +
             ", name='" + name + '\'' +
             ", type='" + type + '\'' +
-            ", card=" + card + // Notez que cela va appeler la méthode toString() de Card si elle est définie
             '}';
     }
-
 }

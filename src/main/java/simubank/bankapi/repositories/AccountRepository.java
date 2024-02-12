@@ -8,4 +8,5 @@ import simubank.bankapi.models.Account;
 @Repository
 @Transactional
 public interface AccountRepository extends CrudRepository<Account, Long> {
+
 }
