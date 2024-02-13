@@ -45,7 +45,7 @@ public class Bank extends Application {
     @Override
     public void init() throws Exception {
         springContext = SpringApplication.run(Bank.class);
-        FXMLLoader loader = new FXMLLoader(new URI("file:src/main/resources/dashboard.fxml").toURL());
+        FXMLLoader loader = new FXMLLoader(new URI("file:src/main/java/simubank/bankapi/views/dashboard.fxml").toURL());
         loader.setControllerFactory(springContext::getBean);
         root = loader.load();
     }
@@ -60,7 +60,6 @@ public class Bank extends Application {
 
             Account test = new Account("Jo", Account.Type.CREDIT, 100);
 
-            test.setCard(testCard);
             testCard.setAccount(test);
             accounts.save(test);
 

@@ -1,14 +1,13 @@
-package simubank.bankapi.view;
+package simubank.bankapi.views;
 
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.SubScene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import simubank.bankapi.models.Account;
@@ -19,7 +18,6 @@ import simubank.bankapi.repositories.CardRepository;
 import simubank.bankapi.repositories.TpeRepository;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
 
 
 @Controller
@@ -38,17 +36,19 @@ public class DashboardController {
     private TableView<Card> cardsTable;
 
     @FXML
-    private TableView<Tpe> tpeTable;
+    private TableView<Tpe> TPEsTable;
+
+    @FXML
+    private SubScene addAccountModal;
 
     @FXML
     private void initialize() {
         loadAccounts();
+        loadCards();
+        loadTPEs();
     }
 
     public void loadAccounts() {
-        for (int i = 0; i < 10; i++) {
-            accountsRepository.save(new Account("Account " + i, Account.Type.CREDIT, 100));
-        }
         ObservableList<Account> accountsList = toObservableList(accountsRepository.findAll());
         Field[] fields = Account.class.getDeclaredFields();
         for (Field field : fields) {
@@ -59,11 +59,37 @@ public class DashboardController {
         accountsTable.setItems(accountsList);
     }
 
+    public void loadCards() {
+        ObservableList<Card> cardList = toObservableList(cardsRepository.findAll());
+        Field[] fields = Card.class.getDeclaredFields();
+        for (Field field : fields) {
+            TableColumn<Card, String> column = new TableColumn<>(field.getName());
+            column.setCellValueFactory(new PropertyValueFactory<>(field.getName()));
+            cardsTable.getColumns().add(column);
+        }
+        cardsTable.setItems(cardList);
+    }
+
+    public void loadTPEs() {
+        ObservableList<Tpe> TPEList = toObservableList(tpeRepository.findAll());
+        Field[] fields = Tpe.class.getDeclaredFields();
+        for (Field field : fields) {
+            TableColumn<Tpe, String> column = new TableColumn<>(field.getName());
+            column.setCellValueFactory(new PropertyValueFactory<>(field.getName()));
+            TPEsTable.getColumns().add(column);
+        }
+        TPEsTable.setItems(TPEList);
+    }
+
     public static <T> ObservableList<T> toObservableList(Iterable<T> iterable) {
         ObservableList<T> observableList = FXCollections.observableArrayList();
         for (T element : iterable) {
             observableList.add(element);
         }
         return observableList;
+    }
+
+    public void showAddAccountDialog(ActionEvent actionEvent) {
+
     }
 }
