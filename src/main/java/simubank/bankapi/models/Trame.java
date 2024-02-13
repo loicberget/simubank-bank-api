@@ -5,8 +5,8 @@ import java.sql.Timestamp;
 public class Trame {
     public String entete;
     public Timestamp horodatage;
-    public Long emetteur;
-    public String banque;
+    public Long emetteur;   //id TPE
+    public String banque;   //code banque
     public String cardNumber;
     public double montant;
     public String reponse;

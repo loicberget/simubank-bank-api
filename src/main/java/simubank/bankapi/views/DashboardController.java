@@ -19,9 +19,6 @@ import simubank.bankapi.repositories.CardRepository;
 import simubank.bankapi.repositories.TpeRepository;
 
 import java.lang.reflect.Field;
-import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.List;
 
 
 @Controller
