@@ -1,5 +1,6 @@
 package simubank.bankapi.views;
 
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,6 +19,9 @@ import simubank.bankapi.repositories.CardRepository;
 import simubank.bankapi.repositories.TpeRepository;
 
 import java.lang.reflect.Field;
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.List;
 
 
 @Controller
@@ -65,7 +69,29 @@ public class DashboardController {
         Field[] fields = Card.class.getDeclaredFields();
         for (Field field : fields) {
             TableColumn<Card, String> column = new TableColumn<>(field.getName());
-            column.setCellValueFactory(new PropertyValueFactory<>(field.getName()));
+            if(field.getType() == boolean.class){
+                column.setCellValueFactory(cellData -> {
+                boolean value;
+                try {
+                    // Utilisation de la réflexion pour obtenir la valeur du champ
+                    field.setAccessible(true);
+                    value = field.getBoolean(cellData.getValue());
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                    return new ReadOnlyStringWrapper("");
+                }
+                return new ReadOnlyStringWrapper(value ? "Oui" : "Non");
+                });
+            }
+            else if(field.getName().equals("account")){
+                column.setCellValueFactory(cellData -> {
+                    Account account = cellData.getValue().getAccount();
+                    return new ReadOnlyStringWrapper(account != null ? String.valueOf(account.getId()) : "");
+                });
+            }
+            else{
+                column.setCellValueFactory(new PropertyValueFactory<>(field.getName()));
+            }
             cardsTable.getColumns().add(column);
         }
         cardsTable.setItems(cardList);
@@ -76,9 +102,18 @@ public class DashboardController {
         Field[] fields = Tpe.class.getDeclaredFields();
         for (Field field : fields) {
             TableColumn<Tpe, String> column = new TableColumn<>(field.getName());
-            column.setCellValueFactory(new PropertyValueFactory<>(field.getName()));
+            if(field.getName().equals("account")){
+                column.setCellValueFactory(cellData -> {
+                    Account account = cellData.getValue().getAccount();
+                    return new ReadOnlyStringWrapper(account != null ? String.valueOf(account.getId()) : "");
+                });
+            } 
+            else{
+                column.setCellValueFactory(new PropertyValueFactory<>(field.getName()));
+            }
             TPEsTable.getColumns().add(column);
         }
+
         TPEsTable.setItems(TPEList);
     }
 

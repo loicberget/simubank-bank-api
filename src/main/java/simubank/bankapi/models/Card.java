@@ -46,6 +46,19 @@ public class Card {
     public Account getAccount(){
         return account;
     }
+    public String getLastName(){
+        return lastName;
+    }
+    public String getFirstName(){
+        return firstName;
+    }
+    public String getCardNumber(){
+        return cardNumber;
+    }
+    public int getPin(){
+        return pin;
+    }
+
     
 
     public void setAccount(Account account) {
