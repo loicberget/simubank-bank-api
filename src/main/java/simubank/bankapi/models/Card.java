@@ -37,22 +37,20 @@ public class Card {
     public Long getId() {
         return id;
     }
+    public boolean isOpposed() {
+        return oppose;
+    }
+    public Timestamp getDate() {
+        return date;
+    }
+    public Account getAccount(){
+        return account;
+    }
+    
 
     public void setAccount(Account account) {
         this.account = account;
     }
 
-    @Override
-    public String toString() {
-        return "Card{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", cardNumber='" + cardNumber + '\'' +
-                ", pin=" + pin +
-                ", oppose=" + oppose +
-                ", date=" + date +
-                '}';
-    }
 
 }

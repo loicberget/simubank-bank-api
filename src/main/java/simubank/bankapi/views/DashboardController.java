@@ -59,6 +59,7 @@ public class DashboardController {
         accountsTable.setItems(accountsList);
     }
 
+
     public void loadCards() {
         ObservableList<Card> cardList = toObservableList(cardsRepository.findAll());
         Field[] fields = Card.class.getDeclaredFields();

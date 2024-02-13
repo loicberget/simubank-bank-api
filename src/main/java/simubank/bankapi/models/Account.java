@@ -24,14 +24,12 @@ public class Account {
     private Long id;
     private double balance;
     private String name;
-    private String type;
     public Account(){
 
     }
 
-    public Account(String name, Type type, double balance) {
+    public Account(String name, double balance) {
         this.name = name;
-        this.type = type.name();
         this.balance = balance;
     }
 
@@ -43,13 +41,12 @@ public class Account {
         return name;
     }
 
-    @Override
-    public String toString() {
-    return "Account{" +
-            "id=" + id +
-            ", balance=" + balance +
-            ", name='" + name + '\'' +
-            ", type='" + type + '\'' +
-            '}';
+    public double getBalance(){
+        return balance;
     }
+
+    public void setBalance(double montant){
+        this.balance= montant;
+    }
+
 }

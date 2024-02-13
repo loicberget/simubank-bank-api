@@ -8,4 +8,5 @@ import simubank.bankapi.models.Card;
 @Repository
 @Transactional
 public interface CardRepository extends CrudRepository<Card, Long> {
+    Card findByCardNumber(String cardNumber);
 }

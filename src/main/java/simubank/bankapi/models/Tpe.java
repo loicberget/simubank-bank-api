@@ -5,8 +5,10 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "tpe")
 public class Tpe {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -19,11 +21,12 @@ public class Tpe {
         this.account = account;
     }
 
-    @Override
-    public String toString() {
-    return "Tpe{" +
-            "id=" + id +
-            ", account=" + account + // Notez que cela va appeler la méthode toString() de Account si elle est définie
-            '}';
+    public Long getId(){
+        return id;
     }
+
+    public Account getAccount(){
+        return account;
+    }
+    
 }
