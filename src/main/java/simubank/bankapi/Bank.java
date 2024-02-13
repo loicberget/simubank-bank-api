@@ -53,57 +53,59 @@ public class Bank extends Application {
 
     @Bean
     public CommandLineRunner run() {
-        return (args) -> {
-            // cardRepository.deleteAll();
-            // tpeRepository.deleteAll();
-            // accountRepository.deleteAll();
-            
+        return (args) -> {           
             
             //On crée trois carte
-            Timestamp validityDate =  Timestamp.valueOf("2022-06-12 00:00:00");
-            Card testCard = new Card("Jo","Rock","131543412313423",2332,false, validityDate);
-            Timestamp validityDate2 =  Timestamp.valueOf("2024-03-14 00:00:00");
-            Card testCard2 = new Card("hugo","brisset","131543412313466",1111,false, validityDate2);
-            Timestamp validityDate3 =  Timestamp.valueOf("2026-06-12 00:00:00");
-            Card testCard3 = new Card("loic","berger","131543412313499",2222,true, validityDate3);
-            //on les ajoute a la bdd
-            cardRepository.save(testCard);
-            cardRepository.save(testCard2);
-            cardRepository.save(testCard3);
-            //On crée trois compte
-            Account account1 = new Account("hugo brisset", 100);
-            Account account2 = new Account("loic berger", 100);
-            Account account3 = new Account("Paul Bougle", 300);
-            //on les ajoute a la bdd
-            accountRepository.save(account1);
-            accountRepository.save(account2);
-            accountRepository.save(account3);
-            //On crée trois tpe
-            Tpe tpe1 = new Tpe();
-            Tpe tpe2 = new Tpe();
-            Tpe tpe3 = new Tpe();
-            //on les ajoute a la bdd
-            tpeRepository.save(tpe1);
-            tpeRepository.save(tpe2);
-            tpeRepository.save(tpe3);
-            //On lie les cartes a chaque compte
-            testCard.setAccount(account1);
-            testCard2.setAccount(account2);
-            testCard3.setAccount(account3);
-            //On sauvegarde les changeent dans la bdd
-            cardRepository.save(testCard);
-            cardRepository.save(testCard2);
-            cardRepository.save(testCard3);
-            //On lie les tpe et les comptes
-            tpe1.setAccount(account1);
-            tpe2.setAccount(account2);
-            tpe3.setAccount(account3);
-            //On sauvegarde dans la bdd
-            tpeRepository.save(tpe1);
-            tpeRepository.save(tpe2);
-            tpeRepository.save(tpe3);
+            if(!isInitialized()){
+                Timestamp validityDate =  Timestamp.valueOf("2022-06-12 00:00:00");
+                Card testCard = new Card("Jo","Rock","131543412313423",2332,false, validityDate);
+                Timestamp validityDate2 =  Timestamp.valueOf("2024-03-14 00:00:00");
+                Card testCard2 = new Card("hugo","brisset","131543412313466",1111,false, validityDate2);
+                Timestamp validityDate3 =  Timestamp.valueOf("2026-06-12 00:00:00");
+                Card testCard3 = new Card("loic","berger","131543412313499",2222,true, validityDate3);
+                //on les ajoute a la bdd
+                cardRepository.save(testCard);
+                cardRepository.save(testCard2);
+                cardRepository.save(testCard3);
+                //On crée trois compte
+                Account account1 = new Account("hugo brisset", 100);
+                Account account2 = new Account("loic berger", 100);
+                Account account3 = new Account("Paul Bougle", 300);
+                //on les ajoute a la bdd
+                accountRepository.save(account1);
+                accountRepository.save(account2);
+                accountRepository.save(account3);
+                //On crée trois tpe
+                Tpe tpe1 = new Tpe();
+                Tpe tpe2 = new Tpe();
+                Tpe tpe3 = new Tpe();
+                //on les ajoute a la bdd
+                tpeRepository.save(tpe1);
+                tpeRepository.save(tpe2);
+                tpeRepository.save(tpe3);
+                //On lie les cartes a chaque compte
+                testCard.setAccount(account1);
+                testCard2.setAccount(account2);
+                testCard3.setAccount(account3);
+                //On sauvegarde les changeent dans la bdd
+                cardRepository.save(testCard);
+                cardRepository.save(testCard2);
+                cardRepository.save(testCard3);
+                //On lie les tpe et les comptes
+                tpe1.setAccount(account1);
+                tpe2.setAccount(account2);
+                tpe3.setAccount(account3);
+                //On sauvegarde dans la bdd
+                tpeRepository.save(tpe1);
+                tpeRepository.save(tpe2);
+                tpeRepository.save(tpe3);
+            }
 
         };
+    }
+
+    private boolean isInitialized(){
+        return accountRepository.count() > 0;
     }
 
     @Override
